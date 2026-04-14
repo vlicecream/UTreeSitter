@@ -11,8 +11,8 @@
     "url": "git+https://github.com/vlicecream/UTreeSitter.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Ame林汀",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/vlicecream/UTreeSitter/issues"
