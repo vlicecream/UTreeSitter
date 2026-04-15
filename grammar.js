@@ -115,9 +115,9 @@ const UNREAL_NAMED_DECLARATION_MACROS = [
 module.exports = grammar(cpp, {
   /**
    * Use a dedicated grammar name so Neovim can register it independently.
-   * 使用独立 grammar 名称，方便在 Neovim 中单独注册 unrealcpp 解析器。
+   * 使用独立 grammar 名称，方便在 Neovim 中单独注册 unreal_cpp 解析器。
    */
-  name: "unrealcpp",
+  name: "unreal_cpp",
 
   /**
    * Keep the upstream externals and do not invent new scanners.

@@ -7,7 +7,7 @@
 
 /**
  * Reuse the upstream C++ raw-string external scanner for this Unreal parser.
- * 这里复用上游 C++ 的 raw string external scanner，只把导出符号改成 unrealcpp。
+ * 这里复用上游 C++ 的 raw string external scanner，只把导出符号改成 unreal_cpp。
  */
 
 enum TokenType {
@@ -111,7 +111,7 @@ static bool scan_raw_string_content(Scanner *scanner, TSLexer *lexer) {
  * Create the external scanner payload.
  * 创建 external scanner 的状态对象。
  */
-void *tree_sitter_unrealcpp_external_scanner_create(void) {
+void *tree_sitter_unreal_cpp_external_scanner_create(void) {
   Scanner *scanner = ts_calloc(1, sizeof(Scanner));
   memset(scanner, 0, sizeof(Scanner));
   return scanner;
@@ -121,7 +121,7 @@ void *tree_sitter_unrealcpp_external_scanner_create(void) {
  * Dispatch external scanning based on the valid symbol set.
  * 根据当前可接受 token 集合分派 external scanner 的扫描逻辑。
  */
-bool tree_sitter_unrealcpp_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
+bool tree_sitter_unreal_cpp_external_scanner_scan(void *payload, TSLexer *lexer, const bool *valid_symbols) {
   Scanner *scanner = (Scanner *)payload;
 
   if (valid_symbols[RAW_STRING_DELIMITER] && valid_symbols[RAW_STRING_CONTENT]) {
@@ -145,7 +145,7 @@ bool tree_sitter_unrealcpp_external_scanner_scan(void *payload, TSLexer *lexer, 
  * Serialize the scanner state so incremental parsing can restore it.
  * 序列化 scanner 状态，供增量解析恢复使用。
  */
-unsigned tree_sitter_unrealcpp_external_scanner_serialize(void *payload, char *buffer) {
+unsigned tree_sitter_unreal_cpp_external_scanner_serialize(void *payload, char *buffer) {
   static_assert(MAX_DELIMITER_LENGTH * sizeof(wchar_t) < TREE_SITTER_SERIALIZATION_BUFFER_SIZE,
                 "Serialized delimiter is too long!");
 
@@ -159,7 +159,7 @@ unsigned tree_sitter_unrealcpp_external_scanner_serialize(void *payload, char *b
  * Restore the scanner state from the serialized buffer.
  * 从序列化缓冲区恢复 scanner 状态。
  */
-void tree_sitter_unrealcpp_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
+void tree_sitter_unreal_cpp_external_scanner_deserialize(void *payload, const char *buffer, unsigned length) {
   assert(length % sizeof(wchar_t) == 0 && "Can't decode serialized delimiter!");
 
   Scanner *scanner = (Scanner *)payload;
@@ -173,7 +173,7 @@ void tree_sitter_unrealcpp_external_scanner_deserialize(void *payload, const cha
  * Free the external scanner payload.
  * 释放 external scanner 的状态对象。
  */
-void tree_sitter_unrealcpp_external_scanner_destroy(void *payload) {
+void tree_sitter_unreal_cpp_external_scanner_destroy(void *payload) {
   Scanner *scanner = (Scanner *)payload;
   ts_free(scanner);
 }
