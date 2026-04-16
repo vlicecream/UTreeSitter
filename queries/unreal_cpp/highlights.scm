@@ -1,6 +1,34 @@
 ;; inherits: cpp
 
 ; ========================
+; C++ Preprocessor
+; ========================
+
+(preproc_include) @keyword.directive
+(preproc_def) @keyword.directive
+(preproc_function_def) @keyword.directive
+(preproc_call) @keyword.directive
+(preproc_if) @keyword.directive
+(preproc_ifdef) @keyword.directive
+(preproc_else) @keyword.directive
+(preproc_elif) @keyword.directive
+(preproc_endif) @keyword.directive
+
+(preproc_include
+  path: (string_literal) @string.special)
+
+(preproc_include
+  path: (system_lib_string) @string.special)
+
+; ========================
+; C++ Core Types / Names
+; ========================
+
+(primitive_type) @type.builtin
+(type_identifier) @type
+(qualified_identifier) @type
+
+; ========================
 ; Unreal Reflection Macros
 ; ========================
 
@@ -91,8 +119,14 @@
 ; ========================
 
 (call_expression
+  function: (identifier) @function)
+
+(call_expression
   function: (qualified_identifier
     name: (identifier) @function))
+
+(function_declarator
+  declarator: (identifier) @function)
 
 (function_declarator
   declarator: (qualified_identifier
@@ -144,6 +178,10 @@
  "public"
  "private"
  "protected"
+ "static"
+ "const"
+ "inline"
+ "return"
  "virtual"
  "override"
  "constexpr"
