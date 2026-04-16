@@ -1,3 +1,5 @@
+;; inherits: cpp
+
 ; ========================
 ; Unreal Reflection Macros
 ; ========================
