@@ -63,12 +63,80 @@
 (unreal_specifier
   flag: (unreal_specifier_keyword) @attribute)
 
+(unreal_specifier
+  value: (unreal_specifier_value
+    (string_literal) @string))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    (number_literal) @number))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    [
+      (true)
+      (false)
+    ] @constant.builtin))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    (identifier) @constant))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    (qualified_unreal_identifier) @type))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    (qualified_unreal_type_identifier) @type))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    (template_type) @type))
+
 ; meta=(Key=Value)
 (unreal_meta_specifier_item
   key: (identifier) @attribute)
 
 (unreal_meta_specifier_item
   key: (unreal_specifier_keyword) @attribute)
+
+(unreal_meta_specifier_item
+  flag: (identifier) @attribute)
+
+(unreal_meta_specifier_item
+  flag: (unreal_specifier_keyword) @attribute)
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (string_literal) @string))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (number_literal) @number))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    [
+      (true)
+      (false)
+    ] @constant.builtin))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (identifier) @constant))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (qualified_unreal_identifier) @type))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (qualified_unreal_type_identifier) @type))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (template_type) @type))
 
 ; ========================
 ; UE API Macro (XXX_API)
