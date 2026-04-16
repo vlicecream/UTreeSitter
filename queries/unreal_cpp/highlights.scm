@@ -10,9 +10,9 @@
 (preproc_call) @keyword.directive
 (preproc_if) @keyword.directive
 (preproc_ifdef) @keyword.directive
+(preproc_elifdef) @keyword.directive
 (preproc_else) @keyword.directive
 (preproc_elif) @keyword.directive
-(preproc_endif) @keyword.directive
 
 (preproc_include
   path: (string_literal) @string.special)
