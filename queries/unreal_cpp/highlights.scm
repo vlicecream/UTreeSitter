@@ -1,7 +1,19 @@
 ;; inherits: cpp
 
+; 默认配色策略 / Default color strategy:
+; - 普通 C++ 尽量沿用继承自 cpp query 的默认语义分组
+;   Keep plain C++ on the inherited cpp query semantics.
+; - Unreal 宏和预处理风格 token 优先映射到 directive / macro 类 capture
+;   Map Unreal macros and preprocessor-like tokens to directive / macro captures.
+; - 类型名和 specifier key 优先映射到 type 类 capture
+;   Map type names and specifier keys to type-like captures.
+; - 函数、方法、字段尽量保持 function / property 层次
+;   Keep functions, methods, and fields on function / property style captures.
+; - 字符串、数字、布尔值继续使用各自原生 capture
+;   Keep strings, numbers, and booleans on their native captures.
+
 ; ========================
-; C++ Preprocessor
+; C++ 预处理 / C++ Preprocessor
 ; ========================
 
 (preproc_include) @keyword.directive
@@ -21,7 +33,7 @@
   path: (system_lib_string) @string.special)
 
 ; ========================
-; C++ Core Types / Names
+; C++ 核心类型 / C++ Core Types / Names
 ; ========================
 
 (primitive_type) @type.builtin
@@ -29,39 +41,39 @@
 (qualified_identifier) @type
 
 ; ========================
-; Unreal Reflection Macros
+; Unreal 反射宏 / Unreal Reflection Macros
 ; ========================
 
-(unreal_class_macro) @attribute
-(unreal_struct_macro) @attribute
-(unreal_enum_macro) @attribute
+(unreal_class_macro) @keyword.directive
+(unreal_struct_macro) @keyword.directive
+(unreal_enum_macro) @keyword.directive
 
-(unreal_property_macro) @property
+(unreal_property_macro) @keyword.directive
 (unreal_function_macro) @function.macro
 
-(unreal_umeta_macro) @attribute
+(unreal_umeta_macro) @keyword.directive
 
-(unreal_generated_body_macro) @macro
-(unreal_declare_class_macro) @macro
-(unreal_define_default_object_initializer_macro) @macro
+(unreal_generated_body_macro) @keyword.directive
+(unreal_declare_class_macro) @keyword.directive
+(unreal_define_default_object_initializer_macro) @keyword.directive
 
-(unreal_deprecated_macro) @attribute
+(unreal_deprecated_macro) @keyword.directive
 
 ; ========================
-; UE Specifiers (Blueprintable, EditAnywhere...)
+; UE Specifier 参数 / UE Specifiers (Blueprintable, EditAnywhere...)
 ; ========================
 
 (unreal_specifier
-  key: (identifier) @attribute)
+  key: (identifier) @type)
 
 (unreal_specifier
-  key: (unreal_specifier_keyword) @attribute)
+  key: (unreal_specifier_keyword) @type)
 
 (unreal_specifier
-  flag: (identifier) @attribute)
+  flag: (identifier) @type)
 
 (unreal_specifier
-  flag: (unreal_specifier_keyword) @attribute)
+  flag: (unreal_specifier_keyword) @type)
 
 (unreal_specifier
   value: (unreal_specifier_value
@@ -94,18 +106,18 @@
   value: (unreal_specifier_value
     (template_type) @type))
 
-; meta=(Key=Value)
+; meta=(Key=Value) 元数据参数 / metadata specifier items
 (unreal_meta_specifier_item
-  key: (identifier) @attribute)
+  key: (identifier) @type)
 
 (unreal_meta_specifier_item
-  key: (unreal_specifier_keyword) @attribute)
+  key: (unreal_specifier_keyword) @type)
 
 (unreal_meta_specifier_item
-  flag: (identifier) @attribute)
+  flag: (identifier) @type)
 
 (unreal_meta_specifier_item
-  flag: (unreal_specifier_keyword) @attribute)
+  flag: (unreal_specifier_keyword) @type)
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
@@ -139,23 +151,23 @@
     (template_type) @type))
 
 ; ========================
-; UE API Macro (XXX_API)
+; UE API 宏 / UE API Macro (XXX_API)
 ; ========================
 
-(unreal_module_api_specifier) @type.qualifier
+(unreal_module_api_specifier) @keyword.directive
 
-; FORCEINLINE
+; FORCEINLINE 内联提示 / FORCEINLINE hint
 (unreal_force_inline_specifier) @keyword.function
 
 ; ========================
-; UE Declaration Macros
+; UE 声明宏 / UE Declaration Macros
 ; ========================
 
 (unreal_declaration_macro
   name: (unreal_declaration_macro_name) @macro)
 
 ; ========================
-; Reflected Type Names
+; 反射类型名 / Reflected Type Names
 ; ========================
 
 (unreal_reflected_class_declaration
@@ -177,13 +189,13 @@
   name: (qualified_identifier) @type)
 
 ; ========================
-; UE Pragma
+; UE Pragma 指令 / UE Pragmas
 ; ========================
 
 (unreal_pragma_macro) @keyword.directive
 
 ; ========================
-; Functions
+; 函数与方法 / Functions and Methods
 ; ========================
 
 (call_expression
@@ -215,14 +227,14 @@
     declarator: (field_identifier) @function.method))
 
 ; ========================
-; Types (UE 风格：大写开头)
+; UE 命名风格类型兜底 / Types (UE naming style fallback)
 ; ========================
 
 ((identifier) @type
  (#match? @type "^[A-Z][A-Za-z0-9_]+$"))
 
 ; ========================
-; Constants
+; 常量 / Constants
 ; ========================
 
 (this) @variable.builtin
@@ -234,7 +246,7 @@
 ] @constant.builtin
 
 ; ========================
-; Keywords
+; 关键字 / Keywords
 ; ========================
 
 [
