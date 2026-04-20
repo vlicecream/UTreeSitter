@@ -146,3 +146,65 @@ Then open a C++ file inside an Unreal project and verify:
 - Unreal macros such as `UCLASS`, `UPROPERTY`, `UFUNCTION`,
   `GENERATED_BODY`, and specifiers like `Blueprintable` and `EditAnywhere`
   receive Tree-sitter highlighting
+
+## Highlighting model
+
+`UTreeSitter` provides Tree-sitter captures, not fixed colors. The
+`queries/unreal_cpp/highlights.scm` file maps Unreal C++ syntax to semantic
+groups such as `@keyword.directive`, `@type`, `@function.method`, `@property`,
+`@string`, and `@number`. Your colorscheme decides the final color for those
+groups.
+
+The default query keeps normal C++ highlighting through `;; inherits: cpp`, then
+adds Unreal-specific captures for:
+
+- reflection macros such as `UCLASS`, `USTRUCT`, `UPROPERTY`, `UFUNCTION`, and
+  `GENERATED_BODY`
+- macro specifier keys and values, including `meta=(BindWidget)`,
+  `Category="UI"`, `ClampMin="0"`, and boolean values
+- Unreal API/export macros such as `MYMODULE_API`
+- Unreal-style type names such as `AActor`, `UUserWidget`, `FText`, `TArray`,
+  `TMap`, and `TSoftObjectPtr`
+- member access and calls such as `Title->SetText(...)` and
+  `CreateWidget<UWidget>(...)`
+
+## Rider-like colors
+
+If you want a Rider-like visual style, keep the query captures as-is and add
+colors in your own Neovim config. Example:
+
+```lua
+local set = vim.api.nvim_set_hl
+
+set(0, "@keyword.unreal_cpp", { fg = "#6A9BFF" })
+set(0, "@keyword.directive.unreal_cpp", { fg = "#6A9BFF" })
+set(0, "@keyword.function.unreal_cpp", { fg = "#6A9BFF" })
+
+set(0, "@type.unreal_cpp", { fg = "#C792EA" })
+set(0, "@type.builtin.unreal_cpp", { fg = "#C792EA" })
+set(0, "@type.qualifier.unreal_cpp", { fg = "#6A9BFF" })
+
+set(0, "@function.unreal_cpp", { fg = "#4EC9B0" })
+set(0, "@function.method.unreal_cpp", { fg = "#4EC9B0" })
+set(0, "@function.macro.unreal_cpp", { fg = "#6A9BFF" })
+set(0, "@property.unreal_cpp", { fg = "#4EC9B0" })
+
+set(0, "@string.unreal_cpp", { fg = "#D7BA7D" })
+set(0, "@string.special.unreal_cpp", { fg = "#D7BA7D" })
+set(0, "@number.unreal_cpp", { fg = "#F78CBA" })
+set(0, "@constant.unreal_cpp", { fg = "#F78CBA" })
+set(0, "@constant.builtin.unreal_cpp", { fg = "#F78CBA" })
+```
+
+Reload your colorscheme after changing highlight overrides, or put the snippet
+inside a `ColorScheme` autocmd so it is re-applied whenever the theme changes.
+
+## Local highlight fixtures
+
+Use these files as stable local samples before committing query changes:
+
+- `test/highlight_fixture_unreal.h`
+- `test/highlight_fixture_unreal.cpp`
+
+For each important token, place the cursor on it and run `:Inspect`. The target
+is to preserve normal C++ captures while layering Unreal captures on top.

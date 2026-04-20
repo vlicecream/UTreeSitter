@@ -32,13 +32,22 @@
 (preproc_include
   path: (system_lib_string) @string.special)
 
+; Raw string literals keep normal string coloring.
+; 原始字符串保持普通字符串颜色。
+(raw_string_literal) @string
+
 ; ========================
 ; C++ 核心类型 / C++ Core Types / Names
 ; ========================
 
 (primitive_type) @type.builtin
+(auto) @type.builtin
 (type_identifier) @type
-(qualified_identifier) @type
+
+; Unreal/C++ projects often use namespaces as type-like prefixes.
+; UE/C++ 项目里 namespace 经常作为类型前缀出现。
+((namespace_identifier) @type
+ (#match? @type "^[A-Z]"))
 
 ; ========================
 ; Unreal 反射宏 / Unreal Reflection Macros
@@ -205,6 +214,11 @@
   function: (qualified_identifier
     name: (identifier) @function))
 
+(call_expression
+  function: (qualified_identifier
+    scope: (namespace_identifier) @type
+    name: (identifier) @function))
+
 (function_declarator
   declarator: (identifier) @function)
 
@@ -214,6 +228,12 @@
 
 (function_declarator
   declarator: (field_identifier) @function)
+
+(template_function
+  name: (identifier) @function)
+
+(template_method
+  name: (field_identifier) @function.method)
 
 (unreal_function_declaration
   declarator: (function_declarator
@@ -226,12 +246,23 @@
   declarator: (function_declarator
     declarator: (field_identifier) @function.method))
 
-; ========================
-; UE 命名风格类型兜底 / Types (UE naming style fallback)
-; ========================
+; Member access needs two layers:
+; - plain member access is a property
+; - member access used as a call target is a method
+; 成员访问分两层：
+; - 普通成员访问是 property
+; - 作为调用目标的成员访问是 method
+(field_expression
+  field: (field_identifier) @property)
 
-((identifier) @type
- (#match? @type "^[A-Z][A-Za-z0-9_]+$"))
+(call_expression
+  function: (field_expression
+    field: (field_identifier) @function.method))
+
+(call_expression
+  function: (field_expression
+    field: (template_method
+      name: (field_identifier) @function.method)))
 
 ; ========================
 ; 常量 / Constants
@@ -245,12 +276,19 @@
  (false)
 ] @constant.builtin
 
+(number_literal) @number
+(string_literal) @string
+
 ; ========================
 ; 关键字 / Keywords
 ; ========================
 
 [
+ "catch"
  "class"
+ "co_await"
+ "co_return"
+ "co_yield"
  "struct"
  "enum"
  "template"
@@ -262,10 +300,30 @@
  "const"
  "inline"
  "return"
+ "if"
+ "else"
+ "for"
+ "while"
+ "switch"
+ "case"
+ "break"
+ "continue"
+ "try"
+ "throw"
+ "delete"
+ "new"
+ "using"
+ "namespace"
+ "friend"
+ "explicit"
+ "mutable"
  "virtual"
  "override"
+ "final"
  "constexpr"
  "consteval"
  "constinit"
  "noexcept"
+ "concept"
+ "requires"
 ] @keyword
