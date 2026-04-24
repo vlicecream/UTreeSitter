@@ -298,6 +298,22 @@
 (assignment_expression
   left: (identifier) @property.unreal_cpp)
 
+[
+ "class"
+ "struct"
+ "enum"
+ "public"
+ "private"
+ "protected"
+ "virtual"
+ "override"
+ "final"
+ "const"
+ "static"
+] @keyword.unreal_cpp
+
+(comment) @comment.unreal_cpp
+
 ; ========================
 ; 常量 / Constants
 ; ========================
