@@ -1,4 +1,5 @@
 ;; inherits: cpp
+;; extends
 
 ; 默认配色策略 / Default color strategy:
 ; - 普通 C++ 尽量沿用继承自 cpp query 的默认语义分组
@@ -53,198 +54,237 @@
 ; Unreal 反射宏 / Unreal Reflection Macros
 ; ========================
 
-(unreal_class_macro) @keyword.directive
-(unreal_struct_macro) @keyword.directive
-(unreal_enum_macro) @keyword.directive
+(unreal_class_macro) @keyword.directive.unreal_cpp
+(unreal_struct_macro) @keyword.directive.unreal_cpp
+(unreal_enum_macro) @keyword.directive.unreal_cpp
 
-(unreal_property_macro) @keyword.directive
-(unreal_function_macro) @function.macro
+(unreal_property_macro) @keyword.directive.unreal_cpp
+(unreal_function_macro) @function.macro.unreal_cpp
 
-(unreal_umeta_macro) @keyword.directive
+(unreal_umeta_macro) @keyword.directive.unreal_cpp
 
-(unreal_generated_body_macro) @keyword.directive
-(unreal_declare_class_macro) @keyword.directive
-(unreal_define_default_object_initializer_macro) @keyword.directive
+(unreal_generated_body_macro) @keyword.directive.unreal_cpp
+(unreal_declare_class_macro) @keyword.directive.unreal_cpp
+(unreal_define_default_object_initializer_macro) @keyword.directive.unreal_cpp
 
-(unreal_deprecated_macro) @keyword.directive
+(unreal_deprecated_macro) @keyword.directive.unreal_cpp
 
 ; ========================
 ; UE Specifier 参数 / UE Specifiers (Blueprintable, EditAnywhere...)
 ; ========================
 
 (unreal_specifier
-  key: (identifier) @type)
+  key: (identifier) @type.unreal_cpp)
 
 (unreal_specifier
-  key: (unreal_specifier_keyword) @type)
+  key: (unreal_specifier_keyword) @type.unreal_cpp)
 
 (unreal_specifier
-  flag: (identifier) @type)
+  flag: (identifier) @type.unreal_cpp)
 
 (unreal_specifier
-  flag: (unreal_specifier_keyword) @type)
-
-(unreal_specifier
-  value: (unreal_specifier_value
-    (string_literal) @string))
+  flag: (unreal_specifier_keyword) @type.unreal_cpp)
 
 (unreal_specifier
   value: (unreal_specifier_value
-    (number_literal) @number))
+    (string_literal) @string.unreal_cpp))
+
+(unreal_specifier
+  value: (unreal_specifier_value
+    (number_literal) @number.unreal_cpp))
 
 (unreal_specifier
   value: (unreal_specifier_value
     [
       (true)
       (false)
-    ] @constant.builtin))
+    ] @constant.builtin.unreal_cpp))
 
 (unreal_specifier
   value: (unreal_specifier_value
-    (identifier) @constant))
+    (identifier) @constant.unreal_cpp))
 
 (unreal_specifier
   value: (unreal_specifier_value
-    (qualified_unreal_identifier) @type))
+    (qualified_unreal_identifier) @type.unreal_cpp))
 
 (unreal_specifier
   value: (unreal_specifier_value
-    (qualified_unreal_type_identifier) @type))
+    (qualified_unreal_type_identifier) @type.unreal_cpp))
 
 (unreal_specifier
   value: (unreal_specifier_value
-    (template_type) @type))
+    (template_type) @type.unreal_cpp))
 
 ; meta=(Key=Value) 元数据参数 / metadata specifier items
 (unreal_meta_specifier_item
-  key: (identifier) @type)
+  key: (identifier) @type.unreal_cpp)
 
 (unreal_meta_specifier_item
-  key: (unreal_specifier_keyword) @type)
+  key: (unreal_specifier_keyword) @type.unreal_cpp)
 
 (unreal_meta_specifier_item
-  flag: (identifier) @type)
+  flag: (identifier) @type.unreal_cpp)
 
 (unreal_meta_specifier_item
-  flag: (unreal_specifier_keyword) @type)
-
-(unreal_meta_specifier_item
-  value: (unreal_specifier_value
-    (string_literal) @string))
+  flag: (unreal_specifier_keyword) @type.unreal_cpp)
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
-    (number_literal) @number))
+    (string_literal) @string.unreal_cpp))
+
+(unreal_meta_specifier_item
+  value: (unreal_specifier_value
+    (number_literal) @number.unreal_cpp))
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
     [
       (true)
       (false)
-    ] @constant.builtin))
+    ] @constant.builtin.unreal_cpp))
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
-    (identifier) @constant))
+    (identifier) @constant.unreal_cpp))
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
-    (qualified_unreal_identifier) @type))
+    (qualified_unreal_identifier) @type.unreal_cpp))
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
-    (qualified_unreal_type_identifier) @type))
+    (qualified_unreal_type_identifier) @type.unreal_cpp))
 
 (unreal_meta_specifier_item
   value: (unreal_specifier_value
-    (template_type) @type))
+    (template_type) @type.unreal_cpp))
 
 ; ========================
 ; UE API 宏 / UE API Macro (XXX_API)
 ; ========================
 
-(unreal_module_api_specifier) @keyword.directive
+(unreal_module_api_specifier) @keyword.directive.unreal_cpp
 
 ; FORCEINLINE 内联提示 / FORCEINLINE hint
-(unreal_force_inline_specifier) @keyword.function
+(unreal_force_inline_specifier) @keyword.function.unreal_cpp
 
 ; ========================
 ; UE 声明宏 / UE Declaration Macros
 ; ========================
 
 (unreal_declaration_macro
-  name: (unreal_declaration_macro_name) @macro)
+  name: (unreal_declaration_macro_name) @function.macro.delegate.unreal_cpp
+  (#match? @function.macro.delegate.unreal_cpp "^DECLARE_.*DELEGATE"))
+
+(unreal_declaration_macro
+  name: (unreal_declaration_macro_name) @function.macro.delegate.unreal_cpp
+  (#match? @function.macro.delegate.unreal_cpp "^DECLARE_EVENT$"))
+
+(unreal_declaration_macro
+  name: (unreal_declaration_macro_name) @macro.unreal_cpp)
 
 ; ========================
 ; 反射类型名 / Reflected Type Names
 ; ========================
 
 (unreal_reflected_class_declaration
-  name: (type_identifier) @type)
+  name: (type_identifier) @type.unreal_cpp)
 
 (unreal_reflected_struct_declaration
-  name: (type_identifier) @type)
+  name: (type_identifier) @type.unreal_cpp)
 
 (unreal_reflected_enum_declaration
-  name: (type_identifier) @type)
+  name: (type_identifier) @type.enum.unreal_cpp)
 
 (unreal_reflected_class_declaration
-  name: (qualified_identifier) @type)
+  name: (qualified_identifier) @type.unreal_cpp)
 
 (unreal_reflected_struct_declaration
-  name: (qualified_identifier) @type)
+  name: (qualified_identifier) @type.unreal_cpp)
 
 (unreal_reflected_enum_declaration
-  name: (qualified_identifier) @type)
+  name: (qualified_identifier) @type.enum.unreal_cpp)
+
+; ========================
+; Enums / Enumerators
+; ========================
+
+(enum_specifier
+  name: (type_identifier) @type.enum.unreal_cpp)
+
+(enum_specifier
+  name: (qualified_identifier) @type.enum.unreal_cpp)
+
+(enumerator
+  name: (identifier) @constant.enum.unreal_cpp)
 
 ; ========================
 ; UE Pragma 指令 / UE Pragmas
 ; ========================
 
-(unreal_pragma_macro) @keyword.directive
+(unreal_pragma_macro) @keyword.directive.unreal_cpp
 
 ; ========================
 ; 函数与方法 / Functions and Methods
 ; ========================
 
+(function_definition
+  declarator: (function_declarator
+    declarator: (identifier) @function.unreal_cpp))
+
+(function_definition
+  declarator: (function_declarator
+    declarator: (field_identifier) @function.method.unreal_cpp))
+
+(function_definition
+  declarator: (function_declarator
+    declarator: (qualified_identifier
+      name: (identifier) @function.unreal_cpp)))
+
+(function_definition
+  declarator: (function_declarator
+    declarator: (qualified_identifier
+      name: (field_identifier) @function.method.unreal_cpp)))
+
 (call_expression
-  function: (identifier) @function)
+  function: (identifier) @function.unreal_cpp)
 
 (call_expression
   function: (qualified_identifier
-    name: (identifier) @function))
+    name: (identifier) @function.unreal_cpp))
 
 (call_expression
   function: (qualified_identifier
-    scope: (namespace_identifier) @type
-    name: (identifier) @function))
+    scope: (namespace_identifier) @type.unreal_cpp
+    name: (identifier) @function.unreal_cpp))
 
 (function_declarator
-  declarator: (identifier) @function)
+  declarator: (identifier) @function.unreal_cpp)
 
 (function_declarator
   declarator: (qualified_identifier
-    name: (identifier) @function))
+    name: (identifier) @function.unreal_cpp))
 
 (function_declarator
-  declarator: (field_identifier) @function)
+  declarator: (field_identifier) @function.method.unreal_cpp)
 
 (template_function
-  name: (identifier) @function)
+  name: (identifier) @function.unreal_cpp)
 
 (template_method
-  name: (field_identifier) @function.method)
+  name: (field_identifier) @function.method.unreal_cpp)
 
 (unreal_function_declaration
   declarator: (function_declarator
-    declarator: (field_identifier) @function.method))
+    declarator: (field_identifier) @function.method.unreal_cpp))
 
 (field_declaration
-  declarator: (field_identifier) @property)
+  declarator: (field_identifier) @property.unreal_cpp)
 
 (field_declaration
   declarator: (function_declarator
-    declarator: (field_identifier) @function.method))
+    declarator: (field_identifier) @function.method.unreal_cpp))
 
 ; Member access needs two layers:
 ; - plain member access is a property
@@ -253,77 +293,42 @@
 ; - 普通成员访问是 property
 ; - 作为调用目标的成员访问是 method
 (field_expression
-  field: (field_identifier) @property)
+  field: (field_identifier) @property.unreal_cpp)
 
-(call_expression
-  function: (field_expression
-    field: (field_identifier) @function.method))
-
-(call_expression
-  function: (field_expression
-    field: (template_method
-      name: (field_identifier) @function.method)))
+(assignment_expression
+  left: (identifier) @property.unreal_cpp)
 
 ; ========================
 ; 常量 / Constants
 ; ========================
 
-(this) @variable.builtin
+(qualified_unreal_identifier) @type.unreal_cpp
+(qualified_unreal_type_identifier) @type.unreal_cpp
+(template_type) @type.unreal_cpp
 
-[
- (null)
- (true)
- (false)
-] @constant.builtin
-
-(number_literal) @number
-(string_literal) @string
+(unreal_macro_fallback_value) @constant.unreal_cpp
+(unreal_declaration_macro_name) @macro.unreal_cpp
+(unreal_specifier_keyword) @constant.builtin.unreal_cpp
 
 ; ========================
-; 关键字 / Keywords
+; Unreal 常见对象与助手 / Unreal Common Objects and Helpers
 ; ========================
 
-[
- "catch"
- "class"
- "co_await"
- "co_return"
- "co_yield"
- "struct"
- "enum"
- "template"
- "typename"
- "public"
- "private"
- "protected"
- "static"
- "const"
- "inline"
- "return"
- "if"
- "else"
- "for"
- "while"
- "switch"
- "case"
- "break"
- "continue"
- "try"
- "throw"
- "delete"
- "new"
- "using"
- "namespace"
- "friend"
- "explicit"
- "mutable"
- "virtual"
- "override"
- "final"
- "constexpr"
- "consteval"
- "constinit"
- "noexcept"
- "concept"
- "requires"
-] @keyword
+(call_expression
+  function: (identifier) @function
+  (#match? @function "^CreateWidget$|^NewObject$|^CreateDefaultSubobject$|^DuplicateObject$|^LoadObject$|^StaticLoadObject$|^LoadClass$|^StaticLoadClass$|^Cast$|^CastChecked$|^CastField$|^FindObject$|^GetDefault$|^GetMutableDefault$|^IsValid$|^IsValidLowLevel$|^UE_LOG$|^UE_CLOG$|^UE_LOGFMT$"))
+
+(call_expression
+  function: (qualified_identifier
+    name: (identifier) @function
+    (#match? @function "^CreateWidget$|^NewObject$|^CreateDefaultSubobject$|^DuplicateObject$|^LoadObject$|^StaticLoadObject$|^LoadClass$|^StaticLoadClass$|^Cast$|^CastChecked$|^CastField$|^FindObject$|^GetDefault$|^GetMutableDefault$|^IsValid$|^IsValidLowLevel$|^UE_LOG$|^UE_CLOG$|^UE_LOGFMT$")))
+
+(call_expression
+  function: (qualified_identifier
+    scope: (namespace_identifier) @type
+    name: (identifier) @function
+    (#match? @function "^CreateWidget$|^NewObject$|^CreateDefaultSubobject$|^DuplicateObject$|^LoadObject$|^StaticLoadObject$|^LoadClass$|^StaticLoadClass$|^Cast$|^CastChecked$|^CastField$|^FindObject$|^GetDefault$|^GetMutableDefault$|^IsValid$|^IsValidLowLevel$|^UE_LOG$|^UE_CLOG$|^UE_LOGFMT$")))
+
+(template_function
+  name: (identifier) @function
+  (#match? @function "^CreateWidget$|^NewObject$|^CreateDefaultSubobject$|^DuplicateObject$|^LoadObject$|^StaticLoadObject$|^LoadClass$|^StaticLoadClass$|^Cast$|^CastChecked$|^CastField$|^FindObject$|^GetDefault$|^GetMutableDefault$|^IsValid$|^IsValidLowLevel$"))
