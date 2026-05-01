@@ -16,7 +16,7 @@ This repository owns the parser and query source only:
 - `queries/unreal_cpp/*.scm`
 - grammar and query fixtures under `test/`
 
-Neovim integration is handled by [`UTreeSitter.nvim`](https://github.com/vlicecream/UTreeSitter.nvim). `UCore.nvim` does not manage the highlighting layer.
+Neovim integration is handled by [`UTreeSitter.nvim`](https://github.com/vlicecream/UTreeSitter.nvim). Normal users do not need to configure this repository directly.
 
 ### Development
 
@@ -60,7 +60,7 @@ Unreal-specific captures cover reflection macros, declaration macros, enums, enu
 - `queries/unreal_cpp/*.scm`
 - `test/` 下的 grammar/query 测试固件
 
-Neovim 集成由 [`UTreeSitter.nvim`](https://github.com/vlicecream/UTreeSitter.nvim) 负责。`UCore.nvim` 不管理高亮表现层。
+Neovim 集成由 [`UTreeSitter.nvim`](https://github.com/vlicecream/UTreeSitter.nvim) 负责。普通用户不需要直接配置这个仓库。
 
 ### 开发
 
