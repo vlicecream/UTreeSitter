@@ -8,6 +8,11 @@
 
 `UTreeSitter` is the Tree-sitter grammar and query pack for Unreal C++.
 
+The grammar is built on top of upstream `tree-sitter-cpp`, but it keeps the
+separate parser name `unreal_cpp`. That is intentional: plain C++ continues to
+use stock `cpp`, while Unreal-specific nodes, queries, and editor integrations
+target `unreal_cpp` explicitly.
+
 This repository owns the parser and query source only:
 
 - `grammar.js`
@@ -51,6 +56,10 @@ Unreal-specific captures cover reflection macros, declaration macros, enums, enu
 ## 中文
 
 `UTreeSitter` 是面向 Unreal C++ 的 Tree-sitter grammar 和 query 包。
+
+这套 grammar 是基于上游 `tree-sitter-cpp` 扩展出来的，但对外仍然保持独立
+parser 名称 `unreal_cpp`。这是刻意设计的：普通 C++ 继续使用原生 `cpp`，
+而 Unreal 专有节点、query 和编辑器集成则明确指向 `unreal_cpp`。
 
 这个仓库只负责底层 parser 与 query 源码：
 
