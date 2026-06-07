@@ -1,3 +1,9 @@
+// Author: Ame林汀
+// Website: vlicecream.github.io
+// File: bindings/rust/lib.rs
+// Purpose: Expose Rust bindings and bundled queries for the tree-sitter Unreal C++ grammar.
+// License: MIT
+
 //! This crate provides Unreal C++ language support for the [tree-sitter] parsing library.
 //!
 //! Typically, you will use the [`LANGUAGE`] constant to add this language to a
@@ -21,6 +27,8 @@
 use tree_sitter_language::LanguageFn;
 
 extern "C" {
+    // Return the raw tree-sitter language entrypoint for this grammar.
+    // 返回该语法对应的原始 tree-sitter 语言入口函数。
     fn tree_sitter_unreal_cpp() -> *const ();
 }
 
@@ -51,6 +59,8 @@ pub const TAGS_QUERY: &str = include_str!("../../queries/tags.scm");
 #[cfg(test)]
 mod tests {
     #[test]
+    // Verify that the generated grammar can be loaded into a parser.
+    // 验证生成后的语法能够被解析器成功加载。
     fn test_can_load_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser

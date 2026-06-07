@@ -1,3 +1,11 @@
+// Author: Ame林汀
+// Website: vlicecream.github.io
+// File: bindings/rust/build.rs
+// Purpose: Compile the tree-sitter Unreal C++ grammar and expose optional query cfg flags.
+// License: MIT
+
+// Compile the grammar sources and advertise optional query files to Cargo.
+// 编译语法源文件，并向 Cargo 声明可选查询文件的配置标记。
 fn main() {
     let src_dir = std::path::Path::new("src");
 
